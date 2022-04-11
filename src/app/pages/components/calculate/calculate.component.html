@@ -1,0 +1,37 @@
+<div class="container">
+    <!--fileを選択したとき(change)イベント発生-->
+    <input type="file" accept=".csv" style="display: none" #fileInput (change)="onChangeFileInput()" />
+    <button mat-raised-button color="primary" class="file-select-button" (click)="onClickFileInputButton()">
+        <mat-icon>attach_file</mat-icon>
+        ファイルを選択
+    </button>
+
+    <p class="file-name" *ngIf="!file; else fileName">ファイルが選択されていません</p>
+    <ng-template #fileName>
+        <p class="file-name">{{ file?.name }}</p>
+    </ng-template>
+
+    <button mat-raised-button *ngIf="file" (click)="calculate()">計算</button>
+</div>
+<div class="example-container mat-elevation-z8">
+    <table mat-table [dataSource]="calculationResult">
+
+        <ng-container matColumnDef="driver_name">
+            <th mat-header-cell *matHeaderCellDef> 名前 </th>
+            <td mat-cell *matCellDef="let element"> {{element.driver_name}} </td>
+        </ng-container>
+        
+        <ng-container matColumnDef="driver_surname">
+            <th mat-header-cell *matHeaderCellDef> 苗字 </th>
+            <td mat-cell *matCellDef="let element"> {{element.driver_surname}} </td>
+        </ng-container>
+        
+        <ng-container matColumnDef="calculated_price">
+            <th mat-header-cell *matHeaderCellDef> 料金 </th>
+            <td mat-cell *matCellDef="let element"> {{element.calculated_price}} </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+</div>
